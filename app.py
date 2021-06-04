@@ -31,7 +31,7 @@ def template_test():
 @app.route('/', methods=['GET', 'POST'])
 def upload_file():
     if request.method == 'POST':
-        file = request.files['file']
+        id_image = int(request.form['id_image'])
         
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
