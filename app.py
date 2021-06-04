@@ -3,14 +3,19 @@ from flask import Flask, request, redirect, url_for, send_from_directory, render
 
 from werkzeug.utils import secure_filename
 import numpy as np
-
+import glob 
 
 
 ALLOWED_EXTENSIONS = set(['jpg', 'jpeg', 'png'])
 IMAGE_SIZE = (150, 150)
 UPLOAD_FOLDER = 'uploads'
 
- 
+APP_ROOT = os.path.dirname(os.path.abspath(__file__))
+IMAGE_PATH = os.path.join('static/bonn/')
+image_list = glob.glob(IMAGE_PATH+'*.png')
+
+
+
 app = Flask(__name__, template_folder='Templates')
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
@@ -32,13 +37,8 @@ def template_test():
 def upload_file():
     if request.method == 'POST':
         id_image = int(request.form['id_image'])
-        
-        if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-            file.save(file_path)
-            #output = predict(file_path)
-            output = {'Negative:': 0, 'Positive': 1}
+        file_path = os.path.join(image_list[id_image])
+        output = {'Negative:': 0, 'Positive': 1}
     return render_template("home.html", label=output, imagesource=file_path)
 
 
