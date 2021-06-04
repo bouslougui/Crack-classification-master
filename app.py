@@ -37,6 +37,8 @@ def template_test():
 def upload_file():
     if request.method == 'POST':
         id_image = int(request.form['id_image'])
+        if id_image >= len(image_list):
+            return render_template('home.html', label='Out of range', imagesource='file://null')
         file_path = os.path.join(image_list[id_image])
         output = {'Negative:': 0, 'Positive': 1}
     return render_template("home.html", label=output, imagesource=file_path)
