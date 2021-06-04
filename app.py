@@ -3,6 +3,7 @@ from flask import Flask, request, redirect, url_for, send_from_directory, render
 
 from werkzeug.utils import secure_filename
 import numpy as np
+import glob 
 
 
 ALLOWED_EXTENSIONS = set(['jpg', 'jpeg', 'png'])
